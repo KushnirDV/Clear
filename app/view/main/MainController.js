@@ -1,6 +1,6 @@
 Ext.define('TestApp.view.main.MainController', {
-    extend: 'Ext.app.ViewController',
-    alias: 'controller.main',
+	extend: 'Ext.app.ViewController',
+	alias: 'controller.main',
 
 	getMainGrid: function(){
 		return Ext.getCmp('MyGridPanel');
@@ -186,5 +186,5 @@ Ext.define('TestApp.view.main.MainController', {
             slideDUration: 400,
             maxWidth: 400
         });
-    }
+	}
 });
