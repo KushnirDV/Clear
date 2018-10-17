@@ -10,9 +10,9 @@ Ext.define('TestApp.view.main.MainController', {
 		return grid.getStore();
 	},
 
-    addReccord: function () {
+	addReccord: function () {
 		this.getMainStore().add({});
-    }, 
+	}, 
 	
 	getEachSelectedRow(){
 		return this.getMainGrid().getSelectionModel().getSelection();
@@ -98,7 +98,7 @@ Ext.define('TestApp.view.main.MainController', {
 		var status = {
 				isPlayButtonActive: false,
 				isStopButtonActive: false
-							};
+			};
 		var selectedRows = this.getEachSelectedRow();
 		if(selectedRows.length > 0){
 			Ext.each(selectedRows, function(el){
@@ -115,8 +115,8 @@ Ext.define('TestApp.view.main.MainController', {
 	
 	isTheRowExisted: function(form){
 		var rowId,
-			isLeaveRowExists, 
-			formVal = form.getValues();
+		    isLeaveRowExists, 
+		    formVal = form.getValues();
 			  
 		Ext.each(Object.getOwnPropertyNames(formVal), function(name){
 			if(name.indexOf('hiddenfield') !== -1){
@@ -170,11 +170,11 @@ Ext.define('TestApp.view.main.MainController', {
 					}
 				}
 			});
-        if (newValue) {
-            this.getMainStore().filter(filterByName);
-        } else {
-            this.getMainStore().removeFilter(filterByName);
-        }
+		if (newValue) {
+			this.getMainStore().filter(filterByName);
+		} else {
+			this.getMainStore().removeFilter(filterByName);
+		}
 	},
 
 	
