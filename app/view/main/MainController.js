@@ -24,7 +24,6 @@ Ext.define('TestApp.view.main.MainController', {
 	
 	hasModifiedRecords(){
 		var records = this.getMainStore().getModifiedRecords();
-console.log(records);
 		return (records.length > 0);
 	},
 	
@@ -97,8 +96,8 @@ console.log(records);
 	
 	getButtonsStatus(){
 		var status = {
-								isPlayButtonActive: false,
-								isStopButtonActive: false
+				isPlayButtonActive: false,
+				isStopButtonActive: false
 							};
 		var selectedRows = this.getEachSelectedRow();
 		if(selectedRows.length > 0){
@@ -116,8 +115,8 @@ console.log(records);
 	
 	isTheRowExisted: function(form){
 		var rowId,
-			  isLeaveRowExists, 
-			  formVal = form.getValues();
+			isLeaveRowExists, 
+			formVal = form.getValues();
 			  
 		Ext.each(Object.getOwnPropertyNames(formVal), function(name){
 			if(name.indexOf('hiddenfield') !== -1){
@@ -132,8 +131,8 @@ console.log(records);
 	},
 	
 	showWarnigWhenFormDataInvalid(){
-	    var formPanel = this.lookupReference('formPanel'),
-        form = formPanel.getForm();
+		var formPanel = this.lookupReference('formPanel'),
+		    form = formPanel.getForm();
 
 		if(form && !form.isValid() && this.isTheRowExisted(form)){
 			this.showToast('<b>Worning!</b><br/>Form data is not valid. Saving was a failure.');
@@ -163,14 +162,14 @@ console.log(records);
 	
 	onChangeFilter: function(dv, newValue, oldValue){
 		var filterByName = Ext.create('Ext.util.Filter', {
-										filterFn: function (item) {
-											if(item && item.data.name.indexOf(newValue) !== -1){
-												return true;
-											}else{
-												return false;
-											}
-										}
-									});
+				filterFn: function (item) {
+					if(item && item.data.name.indexOf(newValue) !== -1){
+						return true;
+					}else{
+						return false;
+					}
+				}
+			});
         if (newValue) {
             this.getMainStore().filter(filterByName);
         } else {
