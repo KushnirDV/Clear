@@ -21,13 +21,16 @@
     font: 18px/1 FontAwesome;
     position: relative;
     top: -2px;
-    content: "\25B6"; /*2B1B*/
+    content: "\25B6";
     color: #3d9aec;
 }
 
-.framing-buttons-stop:before {  
-    font: 18px/1 FontAwesome;
-    line-height: 16px;
+.framing-buttons-stop:before {
+    font: 22px/1 FontAwesome;
+    line-height: 18px;
     content: "\2B1B";
     color: #dd6550;
+    position: relative;
+    top: -2px;
+    font-size-adjust: 0.3;
 }
