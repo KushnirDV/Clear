@@ -17,20 +17,14 @@
 	background: #fff !important;
 }
 
-.framing-buttons-play:before {  
-    font: 18px/1 FontAwesome;
-    position: relative;
-    top: -2px;
-    content: "\25B6";
-    color: #3d9aec;
+.framing-buttons-play:before { 
+    font: 16px/1 FontAwesome;
+	content:"\f04b";
+	color: #3d9aec;
 }
 
 .framing-buttons-stop:before {
-    font: 22px/1 FontAwesome;
-    line-height: 18px;
-    content: "\2B1B";
+    font: 16px/1 FontAwesome;
+    content: "\f04d";
     color: #dd6550;
-    position: relative;
-    top: -2px;
-    font-size-adjust: 0.3;
 }

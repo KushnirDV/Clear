@@ -22,26 +22,35 @@ Ext.define('TestApp.view.main.MainController', {
 		this.getMainStore().remove(this.getEachSelectedRow());
 	},
 	
+	hasModifiedRecords(){
+		var records = this.getMainStore().getModifiedRecords();
+console.log(records);
+		return (records.length > 0);
+	},
+	
 	onSubmitClick: function(){
 		var self =  this;
-		Ext.Msg.show({
-			title:'Save changes?',
-			message: 'Do you want to save latest changes?',
-			buttons: Ext.Msg.YESNO,
-			icon: Ext.Msg.QUESTION,
-			fn: function(btn) {
-				if (btn === 'yes') {
-					self.getMainStore().commitChanges();
-					self.showToast('<b>OK!</b><br/>Saved');
-				} 
-			}
-		});
+		if(this.hasModifiedRecords()){
+			Ext.Msg.show({
+				title:'Save changes?',
+				message: 'Do you want to save latest changes?',
+				buttons: Ext.Msg.YESNO,
+				icon: Ext.Msg.QUESTION,
+				fn: function(btn) {
+					if (btn === 'yes') {
+						self.getMainStore().commitChanges();
+						self.showToast('<b>OK!</b><br/>Saved');
+					} 
+				}
+			});
+		}else{
+			this.showToast('<b>Worning!</b><br/>There are not any corect changes');
+		}
 	},
 	
 	onCancelClick: function(){
 		var self =  this;
-		var records = this.getMainStore().getModifiedRecords();
-		if(records.length > 0){
+		if(this.hasModifiedRecords()){
 			Ext.Msg.show({
 				title:'Reject changes?',
 				message: 'Do you want to reject lates changes?',
@@ -54,7 +63,7 @@ Ext.define('TestApp.view.main.MainController', {
 				}
 			});
 		}else{
-			this.showToast('<b>Worning!</b><br/>There are not any changes');
+			this.showToast('<b>Worning!</b><br/>There are not any corect changes');
 		}
 	},
 	
