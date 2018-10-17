@@ -18,8 +18,9 @@
 }
 
 .framing-buttons-play:before {  
-    font: 30px/1 FontAwesome;
-    line-height: 16px;
+    font: 18px/1 FontAwesome;
+    position: relative;
+    top: -2px;
     content: "\25B6"; /*2B1B*/
     color: #3d9aec;
 }
