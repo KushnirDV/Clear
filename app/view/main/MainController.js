@@ -1,4 +1,5 @@
 Ext.define('TestApp.view.main.MainController', {
+
 	extend: 'Ext.app.ViewController',
 	alias: 'controller.main',
 
@@ -177,14 +178,13 @@ Ext.define('TestApp.view.main.MainController', {
 		}
 	},
 
-	
 	showToast: function(s) {
-        Ext.toast({
-            html: s,
-            closable: false,
-            align: 't',
-            slideDUration: 400,
-            maxWidth: 400
-        });
+		Ext.toast({
+			html: s,
+			closable: false,
+			align: 't',
+			slideDUration: 400,
+			maxWidth: 400
+		});
 	}
 });
