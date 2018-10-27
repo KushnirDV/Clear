@@ -18,7 +18,7 @@ Ext.define('TestApp.view.main.GridForm', {
 		frame: true,
 		margin: '0 10 0 0',
 		bind: {
-			selection: '{theRow}',
+			store: '{record}'
 		},
 		selModel: {
 			type: 'checkboxmodel'
@@ -29,12 +29,6 @@ Ext.define('TestApp.view.main.GridForm', {
 		columnLines: true,
 		rowLines: false,
 		
-		requires: [ 
-			'TestApp.store.Record'
-		],
-		store: {
-			type: 'record'
-		},
 		modelValidation: true,
 		columns: [
 			{ text: 'Id',  dataIndex: 'id', width:40},
@@ -43,12 +37,10 @@ Ext.define('TestApp.view.main.GridForm', {
 			{ text: 'End date', dataIndex: 'endDate', flex: 1,  width: 120, sortable: true, formatter: 'date("d-m-Y H:i:s")' },
 			{ text: 'Status', dataIndex: 'status', flex: 1}
 		],
-		
 		listeners: {
 			selectionchange: 'onSelectionChange'
 		}
-	},
-	{
+	},{
 		xtype: 'tabpanel',
 
 		frame: true,
@@ -57,14 +49,14 @@ Ext.define('TestApp.view.main.GridForm', {
 		items:[{
 			title: 'Details',
 			bodyPadding: 5,
+			
 			items:[
 			{
 				xtype: 'fieldset',
 				title: 'General options',
 				cls: 'field-get-opts',				
+				
 				items:[{
-				
-				
 					xtype: 'form',
 					modelValidation: true,
 					reference: 'formPanel',
@@ -75,19 +67,14 @@ Ext.define('TestApp.view.main.GridForm', {
 						xtype: 'fieldcontainer',
 						fieldLabel: 'Id',
 						bind: {
-							disabled: '{!isSingleRow}',
+							disabled: '{!theRow}',
 							html:'{theRow.id}'
-						}
-					},{
-						xtype: 'hiddenfield',
-						bind: {
-							value:'{theRow.id}'
 						}
 					}, {
 						xtype: 'textfield',
 						fieldLabel: 'Name',
 						bind: {
-							disabled: '{!isSingleRow}',
+							disabled: '{!theRow}',
 							value: '{theRow.name}'
 						}
 					}, {
@@ -98,7 +85,7 @@ Ext.define('TestApp.view.main.GridForm', {
 						formatter: 'date("d/m/Y")',
 						endDateField: 'enddt',
 						bind: {
-							disabled: '{!isSingleRow}',
+							disabled: '{!theRow}',
 							value: '{theRow.startDate}',
 							maxValue: '{theRow.endDate}'
 						}
@@ -110,7 +97,7 @@ Ext.define('TestApp.view.main.GridForm', {
 						formatter: 'date("d/m/Y")',
 						startDateField: 'startdt',
 						bind: {
-							disabled: '{!isSingleRow}',
+							disabled: '{!theRow}',
 							value: '{theRow.endDate}',
 							minValue: '{theRow.startDate}'
 						}

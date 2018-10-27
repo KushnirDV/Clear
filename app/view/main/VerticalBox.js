@@ -29,7 +29,7 @@ Ext.define('TestApp.view.main.VerticalBox', {
 				tooltip: 'Remove the selected record',
 				iconCls:'framing-buttons-remove',
 				bind: {
-					disabled: '{!theRow}'
+					disabled: '{!isSelectionEmpty}'
 				},
 				handler: 'removeRecords'
 			},'-', {
@@ -37,7 +37,7 @@ Ext.define('TestApp.view.main.VerticalBox', {
 				tooltip: 'Run records',
 				iconCls: 'framing-buttons-play',
 				bind: {
-					disabled: '{!isPlayButtonActive}'
+					disabled: '{!recordsStatus.isPlayButtonActive}'
 				},
 				handler: 'runEachSelected'
 			}, {
@@ -45,7 +45,7 @@ Ext.define('TestApp.view.main.VerticalBox', {
 				tooltip: 'Stop records',
 				iconCls: 'framing-buttons-stop',
 				bind:{
-					disabled: '{!isStopButtonActive}'
+					disabled: '{!recordsStatus.isStopButtonActive}'
 				},
 				handler: 'stopEachSelected'
 			}
@@ -62,7 +62,7 @@ Ext.define('TestApp.view.main.VerticalBox', {
 				fieldLabel: 'Name',
 				emptyText: 'Enter filter text..',
 				margin: '0 5',
-				listeners:{ change : 'onChangeFilter' }
+				bind: '{filter}'
 			}]
         },
         {

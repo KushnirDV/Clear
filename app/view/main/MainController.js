@@ -7,8 +7,7 @@ Ext.define('TestApp.view.main.MainController', {
 		return Ext.getCmp('MyGridPanel');
 	},
 	getMainStore: function(){
-		var grid = this.getMainGrid();
-		return grid.getStore();
+		return this.getMainGrid().getStore();
 	},
 
 	addReccord: function () {
@@ -22,15 +21,10 @@ Ext.define('TestApp.view.main.MainController', {
 	removeRecords: function(){
 		this.getMainStore().remove(this.getEachSelectedRow());
 	},
-	
-	hasModifiedRecords(){
-		var records = this.getMainStore().getModifiedRecords();
-		return (records.length > 0);
-	},
-	
+
 	onSubmitClick: function(){
 		var self =  this;
-		if(this.hasModifiedRecords()){
+		if(this.getMainStore().isDirty()){
 			Ext.Msg.show({
 				title:'Save changes?',
 				message: 'Do you want to save latest changes?',
@@ -50,7 +44,7 @@ Ext.define('TestApp.view.main.MainController', {
 	
 	onCancelClick: function(){
 		var self =  this;
-		if(this.hasModifiedRecords()){
+		if(this.getMainStore().isDirty()){
 			Ext.Msg.show({
 				title:'Reject changes?',
 				message: 'Do you want to reject lates changes?',
@@ -68,114 +62,40 @@ Ext.define('TestApp.view.main.MainController', {
 	},
 	
 	runEachSelected: function(){
-		Ext.each(this.getEachSelectedRow(), function(record){
+		var rows = this.getEachSelectedRow();
+		Ext.each(rows, function(record){
 			record.set('status', 'RUNNING');
 		});
-		this.changeButtonsStatus();
+		this.setSelectedRecords(rows);
 	},
 	
 	stopEachSelected: function(){
-		Ext.each(this.getEachSelectedRow(), function(record){
+		var rows = this.getEachSelectedRow();
+		Ext.each(rows, function(record){
 			record.set('status', 'STOPPED');
 		});
-		this.changeButtonsStatus();
+		this.setSelectedRecords(rows);
 	},
 	
 	onSelectionChange: function(dv, selected) {
-		this.changeViewModelSingleRowStatus(selected);
+		if(selected.length === 1)
+			this.getViewModel().set('theRow', selected[0]);
+		else
+			this.getViewModel().set('theRow', '');
+		
+		this.setSelectedRecords(selected);		
 		this.showWarnigWhenFormDataInvalid();
-		this.changeButtonsStatus();
 	},
 	
-	changeButtonsStatus(){
-		var self = this;
-		var data = this.getButtonsStatus();	
-		for(var type in data){
-			self.getViewModel().set(type, data[type]);
-		}
-	},
-	
-	getButtonsStatus(){
-		var status = {
-				isPlayButtonActive: false,
-				isStopButtonActive: false
-			};
-		var selectedRows = this.getEachSelectedRow();
-		if(selectedRows.length > 0){
-			Ext.each(selectedRows, function(el){
-				if(el && el.data){
-					if(el.data.status === 'STOPPED')
-						status.isPlayButtonActive = true;
-					else if(el.data.status === 'RUNNING')
-						status.isStopButtonActive = true;
-				}
-			});
-		}
-		return status;	
-	},
-	
-	isTheRowExisted: function(form){
-		var rowId,
-		    isLeaveRowExists, 
-		    formVal = form.getValues();
-			  
-		Ext.each(Object.getOwnPropertyNames(formVal), function(name){
-			if(name.indexOf('hiddenfield') !== -1){
-				rowId = parseInt(formVal[name]);
-			}
-		});
-
-		if(rowId)
-			isLeaveRowExists = this.getMainStore().getById(rowId);
-			
-	    return isLeaveRowExists;
+	setSelectedRecords: function(selection){
+		this.getViewModel().set('selectedRecords', selection);
 	},
 	
 	showWarnigWhenFormDataInvalid(){
-		var formPanel = this.lookupReference('formPanel'),
-		    form = formPanel.getForm();
-
-		if(form && !form.isValid() && this.isTheRowExisted(form)){
-			this.showToast('<b>Worning!</b><br/>Form data is not valid. Saving was a failure.');
+		var form = this.lookupReference('formPanel').getForm();
+		if(form && !form.isValid()){
+			this.showToast('<b>Worning!</b><br/>Form data was not valid.');
 		};
-	},
-	
-	changeViewModelSingleRowStatus(selected){
-		var isOnlyOneRecordSelected = (selected && selected.length === 1) ? true : false;		
-		this.getViewModel().set('isSingleRow', isOnlyOneRecordSelected);
-		
-			/* fixed bug with last selection in standard work of bind selection of grid panel 
-				(when rows select use check-box then last single selected row is not always the same with form values)
-				Other words some time form values bind to unselected row of grid 
-			*/
-		if(isOnlyOneRecordSelected){
-			var singleRow = (isOnlyOneRecordSelected) ? selected[0]['data'] : '';
-			var standardSelectionRow = this.getViewModel().get('theRow');
-			
-			if(standardSelectionRow && standardSelectionRow.id !== singleRow.id){
-				var realRowsNumburs = selected[0].store.data.indices;
-				var indexRow = (realRowsNumburs && realRowsNumburs[singleRow.id]) ? realRowsNumburs[singleRow.id] : false;
-				if(indexRow !== false)
-					this.getMainGrid().getView().select(indexRow);
-			}
-		}  /*  ---  */
-	},
-	
-	onChangeFilter: function(dv, newValue, oldValue){
-		var filterByName = Ext.create('Ext.util.Filter', {
-				filterFn: function (item) {
-					if(item && item.data.name.indexOf(newValue) !== -1){
-						return true;
-					}else{
-						return false;
-					}
-				}
-			});
-		if (newValue) {
-			this.getMainStore().filter(filterByName);
-		} else {
-			this.getMainStore().removeFilter(filterByName);
-		}
 	},
 
 	showToast: function(s) {

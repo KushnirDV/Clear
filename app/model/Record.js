@@ -5,13 +5,17 @@ Ext.define('TestApp.model.Record', {
         namespace: 'TestApp.model'
     },
 	
-	identifier: 'sequential',
+	identifier: {
+		type: 'sequential',
+		seed: 4,
+	},
 	
     fields: [
-        { name: 'name',      type: 'string'},
-		{ name: 'startDate', type: 'date'  },
-		{ name: 'endDate',  type: 'date'  },
-		{ name: 'status',     type: 'string', defaultValue: 'STOPPED'}
+		{ name: 'id',				type: 'int'},
+        { name: 'name',		type: 'string'},
+		{ name: 'startDate',	type: 'date'  },
+		{ name: 'endDate',	type: 'date'  },
+		{ name: 'status',		type: 'string', defaultValue: 'STOPPED'}
     ],
     
 	validators: {

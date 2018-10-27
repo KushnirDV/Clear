@@ -12,8 +12,7 @@ Ext.define('TestApp.AdvancedVType', {
             start.setMaxValue(date);
             start.validate();
             this.dateRangeMax = date;
-        }
-        else if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
+        } else if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
             var end = field.up('form').down('#' + field.endDateField);
             end.setMinValue(date);
             end.validate();
