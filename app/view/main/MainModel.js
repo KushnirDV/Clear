@@ -1,17 +1,17 @@
 Ext.define('TestApp.view.main.MainModel', {
-    extend: 'Ext.app.ViewModel',
+	extend: 'Ext.app.ViewModel',
 
-    alias: 'viewmodel.main',
+	alias: 'viewmodel.main',
 
-    data: {
+	data: {
 		selectedRecords: [],
 		theRow: '',
 		filter:''
-    },
+	},
 	
 	stores: {
-        record: {
-            model: 'TestApp.model.Record',
+		record: {
+			model: 'TestApp.model.Record',
 			data: [
 				{id: 1, name: 'Task 1', startDate: '2018-10-18T00:00:00Z', endDate: '2018-10-18T00:00:00Z', status: 'STOPPED'},
 				{id: 2, name: 'Task 2', startDate: '2018-10-18T00:00:00Z', endDate: '2018-10-18T00:00:00Z', status: 'RUNNING'},
@@ -21,24 +21,24 @@ Ext.define('TestApp.view.main.MainModel', {
 				property: 'name',
 				filterFn: '{filterByName}'
 			}],
-		    isDirty: function() {
+			isDirty: function() {
 				return (this.getNewRecords().length > 0 || this.getUpdatedRecords().length > 0 || this.getRemovedRecords().length > 0);
 			}
 		}
-    },
-	
+	},
+
 	formulas: {
-	
+
 		filterByName: function(get) {
 			return function(item) {
 				return !get('filter') || ( item && item.data.name.indexOf(get('filter')) !== -1 );
 			};
 		},
-		
+
 		isSelectionEmpty: function(get){
 			return get('selectedRecords').length > 0;
 		},
-		
+
 		recordsStatus: function(get){
 			var selections = get('selectedRecords');
 			var status = {
