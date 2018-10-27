@@ -11,11 +11,11 @@ Ext.define('TestApp.model.Record', {
 	},
 	
 	fields: [
-		{ name: 'id',			type: 'int'},
+		{ name: 'id',		type: 'int'},
 		{ name: 'name',		type: 'string'},
 		{ name: 'startDate',	type: 'date'  },
 		{ name: 'endDate',	type: 'date'  },
-		{ name: 'status',		type: 'string', defaultValue: 'STOPPED'}
+		{ name: 'status',	type: 'string', defaultValue: 'STOPPED'}
 	],
     
 	validators: {
